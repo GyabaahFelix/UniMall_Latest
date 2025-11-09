@@ -27,9 +27,11 @@ export default function Footer() {
           {/* Brand & Newsletter */}
           <div className="space-y-6">
             <div>
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                UNIMALL
-              </h2>
+              <Link to="/">
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent cursor-pointer hover:opacity-80 transition-opacity">
+                  UNIMALL
+                </h2>
+              </Link>
               <p className="text-sm text-muted-foreground mt-2">
                 Your trusted campus marketplace for affordable, everyday essentials.
               </p>

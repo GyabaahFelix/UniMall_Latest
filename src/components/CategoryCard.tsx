@@ -12,8 +12,8 @@ export default function CategoryCard({ name, icon, count }: CategoryCardProps) {
   
   return (
     <Link to={`/category/${slug}`}>
-      <Card className="card-hover cursor-pointer">
-        <CardContent className="flex flex-col items-center justify-center p-8 text-center">
+      <Card className="card-hover cursor-pointer h-full">
+        <CardContent className="flex flex-col items-center justify-center p-8 text-center h-full min-h-[160px]">
           <div className="text-5xl mb-3">{icon}</div>
           <h3 className="font-semibold text-foreground">{name}</h3>
           {count !== undefined && (

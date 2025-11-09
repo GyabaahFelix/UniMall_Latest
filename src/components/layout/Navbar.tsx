@@ -16,7 +16,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-const categories = [
+const mainCategories = [
+  { name: "Electronics", icon: "💻" },
+  { name: "Fashion", icon: "👗" },
+  { name: "Books", icon: "📚" },
+  { name: "Food", icon: "🍕" },
+];
+
+const allCategories = [
   { name: "Electronics", icon: "💻" },
   { name: "Fashion", icon: "👗" },
   { name: "Books", icon: "📚" },
@@ -40,44 +47,19 @@ export default function Navbar({ user }: { user: any }) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
+    <nav className="sticky top-0 z-50 bg-background shadow-sm">
       {/* Top Bar */}
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16 px-4 md:px-6">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              UNIMALL
-            </div>
-          </Link>
+      <div className="border-b border-border">
+        <div className="container-custom">
+          <div className="flex items-center justify-between h-16 px-4 md:px-6">
+            {/* Logo */}
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                UNIMALL
+              </div>
+            </Link>
 
-          {/* Desktop Categories */}
-          <div className="hidden lg:flex items-center space-x-6">
-            {categories.map((category) => (
-              <Link
-                key={category.name}
-                to={`/category/${category.name.toLowerCase().replace(/\s+/g, "-")}`}
-                className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
-              >
-                <span className="mr-1">{category.icon}</span>
-                {category.name}
-              </Link>
-            ))}
-          </div>
-
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex flex-1 max-w-md mx-6">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="pl-10 w-full"
-              />
-            </div>
-          </div>
-
-          {/* Desktop Actions */}
+            {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/cart">
               <Button variant="ghost" size="icon" className="relative">
@@ -147,7 +129,7 @@ export default function Navbar({ user }: { user: any }) {
                   <h3 className="font-semibold text-sm text-muted-foreground uppercase">
                     Categories
                   </h3>
-                  {categories.map((category) => (
+                  {allCategories.map((category) => (
                     <Link
                       key={category.name}
                       to={`/category/${category.name.toLowerCase().replace(/\s+/g, "-")}`}
@@ -231,6 +213,46 @@ export default function Navbar({ user }: { user: any }) {
               </div>
             </SheetContent>
           </Sheet>
+        </div>
+      </div>
+      </div>
+
+      {/* Secondary Bar - Categories & Search */}
+      <div className="border-b border-border bg-muted/20">
+        <div className="container-custom">
+          <div className="flex items-center gap-4 px-4 md:px-6 py-3">
+            {/* Desktop Categories */}
+            <div className="hidden md:flex items-center gap-4 flex-1">
+              <Link
+                to="/products"
+                className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors whitespace-nowrap"
+              >
+                All Products
+              </Link>
+              {mainCategories.map((category) => (
+                <Link
+                  key={category.name}
+                  to={`/category/${category.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors whitespace-nowrap"
+                >
+                  <span className="mr-1">{category.icon}</span>
+                  {category.name}
+                </Link>
+              ))}
+            </div>
+
+            {/* Search Bar */}
+            <div className="flex-1 md:max-w-md">
+              <div className="relative w-full">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search products..."
+                  className="pl-10 w-full"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

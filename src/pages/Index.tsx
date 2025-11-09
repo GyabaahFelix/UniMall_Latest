@@ -218,21 +218,32 @@ export default function Index() {
       <section className="section-padding bg-muted/20">
         <div className="container-custom">
           <h2 className="text-3xl font-bold text-center mb-12">What Students Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="flex mb-3">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-secondary text-secondary" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-4">&ldquo;{testimonial.comment}&rdquo;</p>
-                  <p className="font-semibold">- {testimonial.name}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <Carousel
+            plugins={[
+              Autoplay({
+                delay: 4000,
+              }),
+            ]}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <Card className="h-full">
+                    <CardContent className="p-6 flex flex-col h-full">
+                      <div className="flex mb-3">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="h-5 w-5 fill-secondary text-secondary" />
+                        ))}
+                      </div>
+                      <p className="text-muted-foreground mb-4 flex-1">&ldquo;{testimonial.comment}&rdquo;</p>
+                      <p className="font-semibold">- {testimonial.name}</p>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
       </section>
 

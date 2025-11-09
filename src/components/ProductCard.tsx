@@ -23,7 +23,7 @@ export default function ProductCard({
   isFavorite = false,
 }: ProductCardProps) {
   return (
-    <Card className="group card-hover overflow-hidden">
+    <Card className="group card-hover overflow-hidden flex flex-col h-full">
       <Link to={`/product/${id}`}>
         <div className="relative aspect-square overflow-hidden bg-muted">
           <img
@@ -46,13 +46,13 @@ export default function ProductCard({
           </Button>
         </div>
       </Link>
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex flex-col flex-1">
         <Link to={`/product/${id}`}>
           <h3 className="font-semibold text-foreground line-clamp-2 mb-1 group-hover:text-primary transition-colors">
             {title}
           </h3>
         </Link>
-        <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center justify-between mt-auto">
           <p className="text-xl font-bold text-primary">GH₵{price.toFixed(2)}</p>
           {seller && (
             <p className="text-xs text-muted-foreground">by {seller}</p>
