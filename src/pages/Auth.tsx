@@ -8,11 +8,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const signUpSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  role: z.enum(["buyer", "seller"], { required_error: "Please select a role" }),
 });
 
 const signInSchema = z.object({
@@ -41,12 +43,13 @@ export default function Auth() {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       password: formData.get("password") as string,
+      role: formData.get("role") as string,
     };
 
     try {
       signUpSchema.parse(data);
 
-      const { error } = await supabase.auth.signUp({
+      const { data: authData, error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
@@ -59,8 +62,26 @@ export default function Auth() {
 
       if (error) throw error;
 
-      toast.success("Account created! Please check your email to verify.");
-      navigate("/");
+      // Insert user role
+      if (authData.user) {
+        const { error: roleError } = await supabase
+          .from("user_roles")
+          .insert([{
+            user_id: authData.user.id,
+            role: data.role as "buyer" | "seller",
+          }]);
+
+        if (roleError) throw roleError;
+      }
+
+      toast.success("Account created! Welcome to UniMall!");
+      
+      // Redirect based on role
+      if (data.role === "seller") {
+        navigate("/seller/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
@@ -85,15 +106,31 @@ export default function Auth() {
     try {
       signInSchema.parse(data);
 
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data: authData, error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
       });
 
       if (error) throw error;
 
-      toast.success("Welcome back!");
-      navigate("/");
+      // Get user role and redirect accordingly
+      if (authData.user) {
+        const { data: roleData } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", authData.user.id)
+          .single();
+
+        toast.success("Welcome back!");
+        
+        if (roleData?.role === "seller") {
+          navigate("/seller/dashboard");
+        } else if (roleData?.role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/");
+        }
+      }
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
@@ -178,6 +215,23 @@ export default function Auth() {
                     type="password"
                     required
                   />
+                </div>
+                <div className="space-y-3">
+                  <Label>I want to</Label>
+                  <RadioGroup name="role" defaultValue="buyer" required>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="buyer" id="buyer" />
+                      <Label htmlFor="buyer" className="font-normal cursor-pointer">
+                        Buy products (Buyer)
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="seller" id="seller" />
+                      <Label htmlFor="seller" className="font-normal cursor-pointer">
+                        Sell products (Seller)
+                      </Label>
+                    </div>
+                  </RadioGroup>
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? "Creating account..." : "Create Account"}
