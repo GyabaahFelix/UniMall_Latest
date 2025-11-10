@@ -78,7 +78,9 @@ export default function Auth() {
       
       // Redirect based on role
       if (data.role === "seller") {
-        navigate("/seller/dashboard");
+        navigate("/dashboard/vendor");
+      } else if (data.role === "buyer") {
+        navigate("/dashboard/buyer");
       } else {
         navigate("/");
       }
@@ -124,9 +126,11 @@ export default function Auth() {
         toast.success("Welcome back!");
         
         if (roleData?.role === "seller") {
-          navigate("/seller/dashboard");
+          navigate("/dashboard/vendor");
         } else if (roleData?.role === "admin") {
-          navigate("/admin/dashboard");
+          navigate("/dashboard/admin");
+        } else if (roleData?.role === "buyer") {
+          navigate("/dashboard/buyer");
         } else {
           navigate("/");
         }
@@ -228,7 +232,7 @@ export default function Auth() {
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="seller" id="seller" />
                       <Label htmlFor="seller" className="font-normal cursor-pointer">
-                        Sell products (Seller)
+                        Sell products (Vendor)
                       </Label>
                     </div>
                   </RadioGroup>
