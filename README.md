@@ -1,73 +1,171 @@
-# Welcome to your Lovable project
+🛒 UniMall — E-Commerce Platform
 
-## Project info
+UniMall is a modern e-commerce platform built for seamless buying, selling, and vendor management within a university environment.
+This repository contains the frontend application implemented with React, TypeScript, Vite, Tailwind CSS, shadcn/ui, and Supabase authentication.
 
-**URL**: https://lovable.dev/projects/9218de9f-478e-4484-b1e2-3d781793dec8
+🚀 Features
+👤 Auth & User Roles (Supabase)
 
-## How can I edit this code?
+Email/password authentication
 
-There are several ways of editing your application.
+Three user roles:
 
-**Use Lovable**
+Buyer – standard shopping interface
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9218de9f-478e-4484-b1e2-3d781793dec8) and start prompting.
+Seller/Vendor – vendor dashboard for managing products
 
-Changes made via Lovable will be committed automatically to this repo.
+Admin – restricted access to admin panel
 
-**Use your preferred IDE**
+Row Level Security (RLS) enabled
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+🛍 Buyer Experience
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Fully responsive homepage
 
-Follow these steps:
+Product listing & filtering
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Search, categories, spotlight products
 
-# Step 2: Navigate to the project directory.
+Product details page with:
+
+Vendor profile section
+
+Distance/Location display
+
+Add to cart & wishlist
+
+🏪 Vendor Dashboard
+
+Add/Edit/Delete products
+
+Upload product images
+
+Create custom categories (instantly updates on main site)
+
+Track product performance
+
+🛡 Admin Dashboard
+
+Admin-only login with Supabase role verification
+
+Manage users, vendors, and products
+
+Monitoring tools / system activity
+
+🧱 Tech Stack
+Layer	Technology
+Frontend	React + TypeScript
+Bundler	Vite
+UI	Tailwind CSS + shadcn/ui
+Icons	Lucide React
+Backend	Supabase
+Auth	Supabase Auth
+Storage	Supabase Storage (product images)
+Routing	React Router
+📂 Project Structure
+src/
+ ├── components/
+ ├── pages/
+ ├── admin/
+ ├── vendor/
+ ├── buyer/
+ ├── integrations/supabase/
+ ├── hooks/
+ ├── lib/
+ └── App.tsx
+
+🛠 Local Development
+1. Clone the repository
+git clone <YOUR_REPO_URL>
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+1. Start development server
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+🔐 Supabase Setup (Important)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+You must configure:
 
-**Use GitHub Codespaces**
+Tables
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+users
 
-## What technologies are used for this project?
+user_roles
 
-This project is built with:
+categories
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+products
 
-## How can I deploy this project?
+Authentication
 
-Simply open [Lovable](https://lovable.dev/projects/9218de9f-478e-4484-b1e2-3d781793dec8) and click on Share -> Publish.
+Email/Password auth enabled
 
-## Can I connect a custom domain to my Lovable project?
+Admin must be manually inserted (Seed SQL provided)
 
-Yes, you can!
+Storage
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Bucket: product-images
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+RLS Policies
+
+Public product images access
+
+Vendors can upload only their images
+
+Buyers can read products publicly
+
+Admin full control
+
+🧑‍💻 Admin Account Seeding (SQL)
+
+Use this in Supabase SQL Editor:
+
+select auth.admin.update_user(
+  uid := 'YOUR_ADMIN_USER_ID',
+  email := 'admin@gmail.com',
+  password := 'admin123'
+);
+
+insert into user_roles (user_id, admin)
+values ('YOUR_ADMIN_USER_ID', 'admin');
+
+🌍 Deployment
+
+You can deploy the frontend on:
+
+Vercel
+
+Netlify
+
+Cloudflare Pages
+
+Render
+
+Make sure to set environment variables:
+
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+
+📌 Current Status
+
+Buyer UI ✔️
+
+Vendor dashboard ✔️ (category creation included)
+
+Admin login working ✔️
+
+Admin dashboard routing in progress
+
+Fixing protected routes and role-based redirects
+
+👤 Author
+
+Felix Gyabaah
+Email: felixic360@gmail.com
+
+GitHub: https://github.com/gyabaahfelix
+
+LinkedIn: https://www.linkedin.com/in/felix-best
