@@ -6,7 +6,13 @@ import Footer from "@/components/layout/Footer";
 import ProductCard from "@/components/ProductCard";
 import CategoryCard from "@/components/CategoryCard";
 import { supabase } from "@/integrations/supabase/client";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -31,19 +37,58 @@ const categories = [
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
+    name: "Daniel Godfred",
     rating: 5,
-    comment: "UniMall made it so easy to find affordable textbooks! Saved me so much money this semester.",
+    comment:
+      "UniMall helped me get a brand-new textbook for half the price. Hands down the best campus marketplace!",
   },
   {
-    name: "Michael Chen",
+    name: "Santan Dennis",
     rating: 5,
-    comment: "Love the verified student system. Feel safe buying and selling on campus!",
+    comment:
+      "The verified student system is brilliant. I finally feel confident buying and selling from people on campus.",
   },
   {
-    name: "Aisha Mohammed",
+    name: "Eunice",
     rating: 5,
-    comment: "Fast delivery and great prices. My go-to marketplace for everything I need!",
+    comment:
+      "Smooth experience from browsing to checkout. I love how easy it is to find exactly what I need.",
+  },
+  {
+    name: "Gryphosa",
+    rating: 5,
+    comment:
+      "Sold my old calculator in less than an hour. The platform is fast, safe, and super convenient.",
+  },
+  {
+    name: "Isabel",
+    rating: 5,
+    comment:
+      "I’m impressed with how organized everything is. Product categories and delivery options are top-notch!",
+  },
+  {
+    name: "Donetta",
+    rating: 5,
+    comment:
+      "Delivery was quick, and the seller communication was smooth. Definitely recommending this to my friends.",
+  },
+  {
+    name: "Mike",
+    rating: 5,
+    comment:
+      "Great deals everywhere. Saved a lot on electronics and even found some items I didn’t expect.",
+  },
+  {
+    name: "Chris Nartey",
+    rating: 5,
+    comment:
+    "A reliable place to buy and sell quality items on campus. UniMall makes student commerce stress-free.",
+  },
+  {
+    name: "Felix",
+    rating: 5,
+    comment:
+      "The platform keeps getting better. Love how everything feels tailored for students on campus.",
   },
 ];
 
@@ -56,7 +101,9 @@ export default function Index() {
       setUser(session?.user ?? null);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
@@ -159,7 +206,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* New Products Section */}
+      {/* New Products */}
       <section className="section-padding">
         <div className="container-custom">
           <div className="flex items-center justify-between mb-8">
@@ -168,6 +215,7 @@ export default function Index() {
               <Button variant="outline">View All</Button>
             </Link>
           </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <ProductCard
@@ -183,7 +231,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Shop by Category */}
+      {/* Categories */}
       <section className="section-padding bg-muted/20">
         <div className="container-custom">
           <h2 className="text-3xl font-bold text-center mb-12">Shop by Category</h2>
@@ -195,7 +243,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Promotional Banner #2 */}
+      {/* Promotional Banner */}
       <section className="section-padding">
         <div className="container-custom">
           <Card className="bg-gradient-to-r from-accent/20 to-primary/20 border-2 border-accent/30">
@@ -214,29 +262,40 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Customer Reviews */}
+      {/* Testimonials — Slow Auto Scroll */}
       <section className="section-padding bg-muted/20">
         <div className="container-custom">
           <h2 className="text-3xl font-bold text-center mb-12">What Students Say</h2>
+
           <Carousel
             plugins={[
               Autoplay({
-                delay: 4000,
+                delay: 2000, // Slow continuous scroll
               }),
             ]}
             className="w-full"
           >
             <CarouselContent className="-ml-4">
-              {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+              {[...testimonials, ...testimonials].map((testimonial, index) => (
+                <CarouselItem
+                  key={index}
+                  className="pl-4 md:basis-1/2 lg:basis-1/3"
+                >
                   <Card className="h-full">
                     <CardContent className="p-6 flex flex-col h-full">
                       <div className="flex mb-3">
                         {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="h-5 w-5 fill-secondary text-secondary" />
+                          <Star
+                            key={i}
+                            className="h-5 w-5 fill-secondary text-secondary"
+                          />
                         ))}
                       </div>
-                      <p className="text-muted-foreground mb-4 flex-1">&ldquo;{testimonial.comment}&rdquo;</p>
+
+                      <p className="text-muted-foreground mb-4 flex-1">
+                        &ldquo;{testimonial.comment}&rdquo;
+                      </p>
+
                       <p className="font-semibold">- {testimonial.name}</p>
                     </CardContent>
                   </Card>

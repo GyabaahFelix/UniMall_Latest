@@ -197,7 +197,7 @@ export default function Auth() {
                     id="signup-name"
                     name="name"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Felix Gee"
                     required
                   />
                 </div>
