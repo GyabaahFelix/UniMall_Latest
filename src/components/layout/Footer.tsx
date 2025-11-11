@@ -5,6 +5,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { useState } from "react";
 
+// Payment logos (replace with your own assets or URLs)
+import MTNLogo from "@/assets/payments/mtn.png";
+import VodafoneLogo from "@/assets/payments/vodafone.jpg";
+import VisaLogo from "@/assets/payments/visa.png";
+import MastercardLogo from "@/assets/payments/mastercard.jpg";
+import PayPalLogo from "@/assets/payments/paypal.jpeg";
+
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -20,6 +27,14 @@ export default function Footer() {
     setSubscribed(false);
   };
 
+  const paymentMethods = [
+    { name: "MTN MoMo", logo: MTNLogo },
+    { name: "Vodafone Cash", logo: VodafoneLogo },
+    { name: "Visa", logo: VisaLogo },
+    { name: "Mastercard", logo: MastercardLogo },
+    { name: "PayPal", logo: PayPalLogo },
+  ];
+
   return (
     <footer className="bg-muted/30 border-t border-border mt-16">
       <div className="container-custom section-padding">
@@ -33,7 +48,8 @@ export default function Footer() {
                 </h2>
               </Link>
               <p className="text-sm text-muted-foreground mt-2">
-                Your trusted campus marketplace for affordable, everyday essentials.
+                Your trusted campus marketplace for affordable, everyday
+                essentials.
               </p>
             </div>
 
@@ -50,9 +66,14 @@ export default function Footer() {
                 <Checkbox
                   id="subscribe"
                   checked={subscribed}
-                  onCheckedChange={(checked) => setSubscribed(checked as boolean)}
+                  onCheckedChange={(checked) =>
+                    setSubscribed(checked as boolean)
+                  }
                 />
-                <label htmlFor="subscribe" className="text-xs text-muted-foreground leading-none">
+                <label
+                  htmlFor="subscribe"
+                  className="text-xs text-muted-foreground leading-none"
+                >
                   Yes, subscribe me to your newsletter.*
                 </label>
               </div>
@@ -67,32 +88,50 @@ export default function Footer() {
             <h3 className="font-semibold mb-4">Legal</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link to="/terms" className="hover:text-primary transition-colors">
+                <Link
+                  to="/terms"
+                  className="hover:text-primary transition-colors"
+                >
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="hover:text-primary transition-colors">
+                <Link
+                  to="/privacy"
+                  className="hover:text-primary transition-colors"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/shipping" className="hover:text-primary transition-colors">
+                <Link
+                  to="/shipping"
+                  className="hover:text-primary transition-colors"
+                >
                   Shipping Policy
                 </Link>
               </li>
               <li>
-                <Link to="/refund" className="hover:text-primary transition-colors">
+                <Link
+                  to="/refund"
+                  className="hover:text-primary transition-colors"
+                >
                   Refund Policy
                 </Link>
               </li>
               <li>
-                <Link to="/accessibility" className="hover:text-primary transition-colors">
+                <Link
+                  to="/accessibility"
+                  className="hover:text-primary transition-colors"
+                >
                   Accessibility Statement
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="hover:text-primary transition-colors">
+                <Link
+                  to="/faq"
+                  className="hover:text-primary transition-colors"
+                >
                   FAQ
                 </Link>
               </li>
@@ -107,7 +146,10 @@ export default function Footer() {
               <p>Accra, Ghana</p>
               <p className="flex items-center space-x-1">
                 <span>📧</span>
-                <a href="mailto:info@unimall.com" className="hover:text-primary transition-colors">
+                <a
+                  href="mailto:info@unimall.com"
+                  className="hover:text-primary transition-colors"
+                >
                   info@unimall.com
                 </a>
               </p>
@@ -117,7 +159,7 @@ export default function Footer() {
               </p>
               <p className="flex items-center space-x-1">
                 <span>📞</span>
-                <span>+233 26 416 0654</span>
+                <span>+233 25 742 4051</span>
               </p>
             </div>
           </div>
@@ -127,16 +169,28 @@ export default function Footer() {
             <div>
               <h3 className="font-semibold mb-4">Socials</h3>
               <div className="flex flex-wrap gap-3">
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   TikTok
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   LinkedIn
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Facebook
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   YouTube
                 </a>
               </div>
@@ -144,15 +198,22 @@ export default function Footer() {
 
             <div>
               <h3 className="font-semibold mb-4">Pay Securely with</h3>
-              <div className="grid grid-cols-3 gap-2 text-xs text-muted-foreground">
-                <span>MTN MoMo</span>
-                <span>Vodafone Cash</span>
-                <span>UnionPay</span>
-                <span>JCB</span>
-                <span>Discover</span>
-                <span>Visa</span>
-                <span>Mastercard</span>
-                <span>PayPal</span>
+              <div className="flex items-center justify-start gap-6">
+                {paymentMethods.map((method) => (
+                  <div
+                    key={method.name}
+                    className="flex flex-col items-center justify-center"
+                  >
+                    <img
+                      src={method.logo}
+                      alt={method.name}
+                      className="w-12 h-12 object-contain mb-1"
+                    />
+                    <span className="text-xs text-center text-muted-foreground">
+                      {method.name}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
