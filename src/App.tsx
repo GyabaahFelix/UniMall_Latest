@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthWrapper from "./components/AuthWrapper";
+
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import AdminLogin from "./pages/AdminLogin";
@@ -16,6 +17,7 @@ import BuyerDashboard from "./pages/dashboard/BuyerDashboard";
 import VendorDashboard from "./pages/dashboard/VendorDashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
 import NotFound from "./pages/NotFound";
+import ProductDetails from "@/pages/ProductDetails"; // ✅ Already imported
 
 const queryClient = new QueryClient();
 
@@ -34,31 +36,37 @@ const App = () => (
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/account" element={<Account />} />
           <Route path="/orders" element={<Orders />} />
-          <Route 
-            path="/buyer/dashboard" 
+
+          {/* DASHBOARDS */}
+          <Route
+            path="/buyer/dashboard"
             element={
               <AuthWrapper allowedRoles={["buyer"]}>
                 <BuyerDashboard />
               </AuthWrapper>
-            } 
+            }
           />
-          <Route 
-            path="/vendor/dashboard" 
+          <Route
+            path="/vendor/dashboard"
             element={
               <AuthWrapper allowedRoles={["seller"]}>
                 <VendorDashboard />
               </AuthWrapper>
-            } 
+            }
           />
-          <Route 
-            path="/admin/dashboard" 
+          <Route
+            path="/admin/dashboard"
             element={
               <AuthWrapper allowedRoles={["admin"]}>
                 <AdminDashboard />
               </AuthWrapper>
-            } 
+            }
           />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+          {/* PRODUCT DETAILS */}
+          <Route path="/product/:id" element={<ProductDetails />} /> {/* ✅ This fixes the 404 issue */}
+
+          {/* CATCH-ALL */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

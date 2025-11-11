@@ -5,22 +5,35 @@ import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { supabase } from "@/integrations/supabase/client";
-import { Trash2, ShoppingBag } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { getCartItems, removeFromCart, updateCartItemQuantity } from "@/services/cart";
 
 export default function Cart() {
   const [user, setUser] = useState<any>(null);
   const [cartItems, setCartItems] = useState<any[]>([]);
   const navigate = useNavigate();
 
+  // Fetch cart items
+  const fetchCart = async () => {
+    if (!user) return;
+    try {
+      const items = await getCartItems(user.id);
+      setCartItems(items || []);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to load cart");
+    }
+  };
+
   useEffect(() => {
+    // Get user session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      if (!session?.user) {
-        navigate("/auth");
-      }
+      if (!session?.user) navigate("/auth");
     });
 
+    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
@@ -28,7 +41,35 @@ export default function Cart() {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const total = cartItems.reduce((sum, item) => sum + (item.products?.price || 0) * item.quantity, 0);
+  // Fetch cart whenever user changes
+  useEffect(() => {
+    if (user) fetchCart();
+  }, [user]);
+
+  const handleRemove = async (itemId: string) => {
+    try {
+      await removeFromCart(itemId);
+      toast.success("Item removed from cart");
+      fetchCart(); // refresh cart
+    } catch {
+      toast.error("Failed to remove item");
+    }
+  };
+
+  const handleQuantityChange = async (itemId: string, quantity: number) => {
+    if (quantity < 1) return;
+    try {
+      await updateCartItemQuantity(itemId, quantity);
+      fetchCart(); // refresh cart
+    } catch {
+      toast.error("Failed to update quantity");
+    }
+  };
+
+  const total = cartItems.reduce(
+    (sum, item) => sum + (item.products?.price || 0) * item.quantity,
+    0
+  );
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -41,9 +82,11 @@ export default function Cart() {
           {cartItems.length === 0 ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-16">
-                <ShoppingBag className="h-16 w-16 text-muted-foreground mb-4" />
+                <Trash2 className="h-16 w-16 text-muted-foreground mb-4" />
                 <h2 className="text-2xl font-semibold mb-2">Your cart is empty</h2>
-                <p className="text-muted-foreground mb-6">Start shopping to add items to your cart</p>
+                <p className="text-muted-foreground mb-6">
+                  Start shopping to add items to your cart
+                </p>
                 <Link to="/products">
                   <Button>Browse Products</Button>
                 </Link>
@@ -62,11 +105,37 @@ export default function Cart() {
                       />
                       <div className="flex-1">
                         <h3 className="font-semibold">{item.products?.title}</h3>
-                        <p className="text-muted-foreground">Quantity: {item.quantity}</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              handleQuantityChange(item.id, item.quantity - 1)
+                            }
+                          >
+                            -
+                          </Button>
+                          <span>{item.quantity}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              handleQuantityChange(item.id, item.quantity + 1)
+                            }
+                          >
+                            +
+                          </Button>
+                        </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-lg">GH₵{item.products?.price}</p>
-                        <Button variant="ghost" size="icon">
+                        <p className="font-bold text-lg">
+                          GH₵{(item.products?.price * item.quantity).toFixed(2)}
+                        </p>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleRemove(item.id)}
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -89,7 +158,9 @@ export default function Cart() {
                         <span>GH₵{total.toFixed(2)}</span>
                       </div>
                     </div>
-                    <Button className="w-full btn-gradient-primary">Proceed to Checkout</Button>
+                    <Button className="w-full btn-gradient-primary">
+                      Proceed to Checkout
+                    </Button>
                   </CardContent>
                 </Card>
               </div>
