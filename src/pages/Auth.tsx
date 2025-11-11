@@ -78,9 +78,9 @@ export default function Auth() {
       
       // Redirect based on role
       if (data.role === "seller") {
-        navigate("/dashboard/vendor");
+        navigate("/vendor/dashboard");
       } else if (data.role === "buyer") {
-        navigate("/dashboard/buyer");
+        navigate("/buyer/dashboard");
       } else {
         navigate("/");
       }
@@ -126,11 +126,11 @@ export default function Auth() {
         toast.success("Welcome back!");
         
         if (roleData?.role === "seller") {
-          navigate("/dashboard/vendor");
+          navigate("/vendor/dashboard");
         } else if (roleData?.role === "admin") {
-          navigate("/dashboard/admin");
+          navigate("/admin/dashboard");
         } else if (roleData?.role === "buyer") {
-          navigate("/dashboard/buyer");
+          navigate("/buyer/dashboard");
         } else {
           navigate("/");
         }

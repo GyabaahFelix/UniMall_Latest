@@ -29,7 +29,7 @@ export default function AdminLogin() {
           .single()
           .then(({ data }) => {
             if (data?.role === "admin") {
-              navigate("/dashboard/admin");
+              navigate("/admin/dashboard");
             }
           });
       }
@@ -71,7 +71,7 @@ export default function AdminLogin() {
         }
 
         toast.success("Welcome, Admin!");
-        navigate("/dashboard/admin");
+        navigate("/admin/dashboard");
       }
     } catch (error: any) {
       if (error instanceof z.ZodError) {
