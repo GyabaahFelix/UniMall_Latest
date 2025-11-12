@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthWrapper from "./components/AuthWrapper";
 
+// ✅ Pages
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import AdminLogin from "./pages/AdminLogin";
@@ -17,7 +18,8 @@ import BuyerDashboard from "./pages/dashboard/BuyerDashboard";
 import VendorDashboard from "./pages/dashboard/VendorDashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
 import NotFound from "./pages/NotFound";
-import ProductDetails from "@/pages/ProductDetails"; // ✅ Already imported
+import ProductDetails from "./pages/ProductDetails";
+import CategoryPage from "./pages/CategoryPage"; // ✅ Import added
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* 🏠 Public Routes */}
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin/login" element={<AdminLogin />} />
@@ -37,7 +40,10 @@ const App = () => (
           <Route path="/account" element={<Account />} />
           <Route path="/orders" element={<Orders />} />
 
-          {/* DASHBOARDS */}
+          {/* 🛒 Category Page */}
+          <Route path="/category/:slug" element={<CategoryPage />} /> {/* ✅ Added route */}
+
+          {/* 🧭 Dashboards */}
           <Route
             path="/buyer/dashboard"
             element={
@@ -63,10 +69,10 @@ const App = () => (
             }
           />
 
-          {/* PRODUCT DETAILS */}
-          <Route path="/product/:id" element={<ProductDetails />} /> {/* ✅ This fixes the 404 issue */}
+          {/* 🛍 Product Details */}
+          <Route path="/product/:id" element={<ProductDetails />} />
 
-          {/* CATCH-ALL */}
+          {/* 🚫 Fallback Route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
