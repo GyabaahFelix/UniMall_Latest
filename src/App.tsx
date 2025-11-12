@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthWrapper from "./components/AuthWrapper";
+import SearchResults from "@/pages/SearchResults";
 
 // ✅ Pages
 import Index from "./pages/Index";
@@ -19,7 +20,7 @@ import VendorDashboard from "./pages/dashboard/VendorDashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
 import NotFound from "./pages/NotFound";
 import ProductDetails from "./pages/ProductDetails";
-import CategoryPage from "./pages/CategoryPage"; // ✅ Import added
+import CategoryPage from "./pages/CategoryPage"; // ✅ Added import
 
 const queryClient = new QueryClient();
 
@@ -41,7 +42,10 @@ const App = () => (
           <Route path="/orders" element={<Orders />} />
 
           {/* 🛒 Category Page */}
-          <Route path="/category/:slug" element={<CategoryPage />} /> {/* ✅ Added route */}
+          <Route path="/category/:slug" element={<CategoryPage />} />
+
+          {/* 🔍 Search Results Page */}
+          <Route path="/search" element={<SearchResults />} /> {/* ✅ Added */}
 
           {/* 🧭 Dashboards */}
           <Route
@@ -72,7 +76,7 @@ const App = () => (
           {/* 🛍 Product Details */}
           <Route path="/product/:id" element={<ProductDetails />} />
 
-          {/* 🚫 Fallback Route */}
+          {/* 🚫 404 Page */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
