@@ -63,7 +63,7 @@ export default function Navbar({ user }: { user: any }) {
           <div className="flex items-center justify-between h-16 px-4 md:px-6">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="text-2xl font-bold text-black border-2 border-black px-4 py-1 rounded">
+              <div className="text-3xl font-bold text-black">
                 UNIMALL
               </div>
             </Link>
