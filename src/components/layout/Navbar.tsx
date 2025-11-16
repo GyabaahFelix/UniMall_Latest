@@ -63,7 +63,7 @@ export default function Navbar({ user }: { user: any }) {
           <div className="flex items-center justify-between h-16 px-4 md:px-6">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <div className="text-2xl font-bold text-black border-2 border-black px-4 py-1 rounded">
                 UNIMALL
               </div>
             </Link>
@@ -149,7 +149,9 @@ export default function Navbar({ user }: { user: any }) {
                     {allCategories.map((category) => (
                       <Link
                         key={category.name}
-                        to={`/category/${category.name.toLowerCase().replace(/\s+/g, "-")}`}
+                        to={`/category/${category.name
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
                         className="flex items-center space-x-2 py-2 text-foreground hover:text-primary transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -246,7 +248,9 @@ export default function Navbar({ user }: { user: any }) {
               {mainCategories.map((category) => (
                 <Link
                   key={category.name}
-                  to={`/category/${category.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  to={`/category/${category.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
                   className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors whitespace-nowrap"
                 >
                   <span className="mr-1">{category.icon}</span>
