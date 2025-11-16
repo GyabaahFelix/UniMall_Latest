@@ -1,9 +1,21 @@
+import promoSchoolImg from "@/assets/promo-school.jpg";
+import electronicsImg from "@/assets/electronics.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 const promotions = [
-  { title: "Back to School", subtitle: "Get everything you need for the semester", image: "/src/assets/promo-school.jpg", link: "/products" },
-  { title: "Gadget Deals", subtitle: "Best laptops and accessories at low prices", image: "/src/assets/electronics.jpg", link: "/products" },
+  {
+    title: "Back to School",
+    subtitle: "Get everything you need for the semester",
+    image: promoSchoolImg,
+    link: "/products",
+  },
+  {
+    title: "Gadget Deals",
+    subtitle: "Best laptops and accessories at low prices",
+    image: electronicsImg,
+    link: "/products",
+  },
 ];
 
 export default function PromotionalBannerSection() {

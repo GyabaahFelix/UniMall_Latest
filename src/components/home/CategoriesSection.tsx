@@ -1,13 +1,20 @@
+import electronicsImg from "@/assets/electronics.jpg";
+import fashionImg from "@/assets/fashion-slide.jpg";
+import booksImg from "@/assets/books-slide.jpg";
+import foodImg from "@/assets/food-slide.jpg";
+import hostelImg from "@/assets/hostel-essentials.png";
+import accessoriesImg from "@/assets/accessories.png";
 import { Link } from "react-router-dom";
 
 const categories = [
-  { name: "Electronics", icon: "💻", image: "/src/assets/electronics.jpg" },
-  { name: "Fashion", icon: "👗", image: "/src/assets/fashion-slide.jpg" },
-  { name: "Books", icon: "📚", image: "/src/assets/books-slide.jpg" },
-  { name: "Food", icon: "🍕", image: "/src/assets/food-slide.jpg" },
-  { name: "Hostel Essentials", icon: "🛏️", image: "/src/assets/hostel-essentials.png" },
-  { name: "Accessories", icon: "⌚", image: "/src/assets/accessories.png" },
+  { name: "Electronics", icon: "💻", image: electronicsImg },
+  { name: "Fashion", icon: "👗", image: fashionImg },
+  { name: "Books", icon: "📚", image: booksImg },
+  { name: "Food", icon: "🍕", image: foodImg },
+  { name: "Hostel Essentials", icon: "🛏️", image: hostelImg },
+  { name: "Accessories", icon: "⌚", image: accessoriesImg },
 ];
+
 
 export default function CategoriesSection() {
   return (

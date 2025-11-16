@@ -2,11 +2,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
+import laptopSlide from "@/assets/laptop-slide.png";
+import fashionSlide from "@/assets/fashion-slide.jpg";
+import booksSlide from "@/assets/books-slide.jpg";
+import foodSlide from "@/assets/food-slide.jpg";
+
 const slideMessages = [
-  { title: "Best Laptops on Campus", image: "/src/assets/laptop-slide.png" },
-  { title: "Fashion Deals", image: "/src/assets/fashion-slide.jpg" },
-  { title: "Books & Stationery", image: "/src/assets/books-slide.jpg" },
-  { title: "Food & Snacks", image: "/src/assets/food-slide.jpg" },
+  { title: "Best Laptops on Campus", image: laptopSlide },
+  { title: "Fashion Deals", image: fashionSlide },
+  { title: "Books & Stationery", image: booksSlide },
+  { title: "Food & Snacks", image: foodSlide },
 ];
 
 export default function SlideShow() {

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import promoSchoolImg from "@/assets/promo-school.jpg";
 
 export default function SalesBanner() {
   return (
@@ -7,7 +8,7 @@ export default function SalesBanner() {
         <Link to="/products">
           <div className="relative w-full h-[300px] md:h-[400px] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow">
             <img
-              src="/src/assets/promo-school.jpg"
+              src={promoSchoolImg}
               alt="Back to School Sale"
               className="w-full h-full object-cover"
             />
