@@ -10,6 +10,9 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 import PromotionalBannerSection from "@/components/home/PromotionalBannerSection";
 import { supabase } from "@/integrations/supabase/client";
 import ProductSpotlight from "@/components/ProductSpotlight";
+import ShopTheBestDeals from "@/components/ShopTheBestDeals";
+import FastDeliveryBanner from "@/components/FastDeliveryBanner";
+import BecomeVendorBanner from "@/components/BecomeVendorBanner";
 
 export default function Index() {
   const [user, setUser] = useState<any>(null);
@@ -62,17 +65,31 @@ export default function Index() {
       <HeroSection />
       <SlideShow />
 
-      {/* Product Spotlight Section */}
-      <ProductSpotlight
-        spotlights={spotlights}
-        loading={loadingSpotlights}
-      />
+      {/* Shop the Best Deals */}
+      <ShopTheBestDeals />
 
+      {/* Product Spotlight Section */}
+      <ProductSpotlight spotlights={spotlights} loading={loadingSpotlights} />
+
+      {/* Sales Banner */}
       <SalesBanner />
+
+      {/* New Products */}
       <NewProducts products={products} />
+
+      {/* Become a Vendor Banner */}
+      <BecomeVendorBanner />
+
+      {/* Categories */}
       <CategoriesSection />
+
+      {/* Fast Delivery Banner */}
+      <FastDeliveryBanner />
+
+      {/* Promotional + Testimonials */}
       <PromotionalBannerSection />
       <TestimonialsSection />
+
       <Footer />
     </div>
   );
